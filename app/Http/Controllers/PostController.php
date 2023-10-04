@@ -38,11 +38,8 @@ class PostController extends Controller
     {
         // get post if we passed $id instead of post:
         // $post = Post::find($id);
-        
-        // own check
-        if(!$post->ownedBy($request->user())) {
-            throw new AuthorizationException();
-        }
+
+        $this->authorize('delete', $post);
 
         $post->delete();
 
