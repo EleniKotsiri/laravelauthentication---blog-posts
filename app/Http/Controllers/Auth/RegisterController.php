@@ -18,12 +18,14 @@ class RegisterController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:255',
-            'email' => 'required|email|unique:users', // unique to 'users' table
+            'username' => 'required|unique:users,username',
+            'email' => 'required|email|unique:users,email', // unique to 'users' table on the 'email' column
             'password' => 'required|confirmed',
         ]);
 
         User::create([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);

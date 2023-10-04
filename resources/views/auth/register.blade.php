@@ -33,6 +33,19 @@
             @enderror
 
             <div class="mb-4">
+                <label for="username" class="sr-only">Username</label>
+                <input type="text" name="username" id="username" placeholder="Add a username" autocomplete="off"
+                    class="bg-gray-100 border-2 w-full p-4 @error('username') border-red-500 @enderror"
+                >
+            </div>
+
+            @error('username')
+                <div class="text-red-500 m-2 text-sm">
+                    {{ $message }}
+                </div>
+            @enderror
+
+            <div class="mb-4">
                 <label for="password" class="sr-only">Password</label>
                 <input type="password" name="password" id="password" placeholder="Your password"
                     class="bg-gray-100 border-2 w-full p-4 @error('password') border-red-500 @enderror">
