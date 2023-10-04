@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,7 +14,10 @@ class PostController extends Controller
     }
     public function index()
     {
-        return view('posts.index');
+        $posts = Post::latest()->paginate(10); // Collection of posts | latest() == orderBy('created_at', 'desc')
+        return view('posts.index', [
+            'posts' => $posts
+        ]);
     }
 
     public function store(Request $request)
@@ -22,8 +26,9 @@ class PostController extends Controller
             'body' => 'required'
         ]);
 
-        dd('passed validation');
+        // derives from the relationship between User and Post
+        $request->user()->posts()->create($request->only('body'));
 
-        // return redirect('dashboard');
+        return redirect('dashboard');
     }
 }

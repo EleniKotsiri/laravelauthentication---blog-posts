@@ -30,6 +30,24 @@
             </div>
         </form>
         @endauth
+
+        <div>
+            @if ($posts->count())
+            @foreach ($posts as $post )
+            <div class="mb-4">
+                <div>
+                    <a href="#" class="font-semibold">{{ $post->user->name }}</a>
+                    <span class="text-gray-600 text-sm"> {{ $post->created_at->diffForHumans() }} </span>
+                </div>
+                <p class="mb-2">{{ $post->body }}</p>
+            </div>
+            @endforeach
+            {{-- add pagination --}}
+            {{ $posts->links() }} 
+            @else
+            <p>There are no posts.</p>
+            @endif
+        </div>
     </div>
 </div>
 
