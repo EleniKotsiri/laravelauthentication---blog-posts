@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -31,5 +32,20 @@ class PostController extends Controller
         $request->user()->posts()->create($request->only('body'));
 
         return redirect('dashboard');
+    }
+
+    public function destroy(Request $request, Post $post)
+    {
+        // get post if we passed $id instead of post:
+        // $post = Post::find($id);
+        
+        // own check
+        if(!$post->ownedBy($request->user())) {
+            throw new AuthorizationException();
+        }
+
+        $post->delete();
+
+        return back();
     }
 }

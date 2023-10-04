@@ -40,10 +40,18 @@
                     <span class="text-gray-600 text-sm"> {{ $post->created_at->diffForHumans() }} </span>
                 </div>
                 <p class="mb-2">{{ $post->body }}</p>
+
+                @if ($post->ownedBy(auth()->user()))
+                <form action={{ route('posts.destroy', $post->id) }} method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="text-red-500">Delete</button>
+                </form>
+                @endif
             </div>
             @endforeach
             {{-- add pagination --}}
-            {{ $posts->links() }} 
+            {{ $posts->links() }}
             @else
             <p>There are no posts.</p>
             @endif

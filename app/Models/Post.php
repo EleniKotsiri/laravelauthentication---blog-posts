@@ -13,6 +13,12 @@ class Post extends Model
         'body'
     ];
 
+    // returns true if the selected post is posted by the current logged in user
+    public function ownedBy(User $user)
+    {
+        return $user->id === $this->user_id;    
+    }
+
     // Relationships
     // A post belongs to a User
     public function user()
