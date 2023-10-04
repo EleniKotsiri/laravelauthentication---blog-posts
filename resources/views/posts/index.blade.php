@@ -36,7 +36,7 @@
             @foreach ($posts as $post )
             <div class="mb-4">
                 <div>
-                    <a href="#" class="font-semibold">{{ $post->user->name }}</a>
+                    <a href={{ route('users.posts', $post->user) }} class="font-semibold">{{ $post->user->name }}</a>
                     <span class="text-gray-600 text-sm"> {{ $post->created_at->diffForHumans() }} </span>
                 </div>
                 <p class="mb-2">{{ $post->body }}</p>
